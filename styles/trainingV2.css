@@ -1,0 +1,332 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary-color: #FFECE5;
+    --text-color: #4A4A4A;
+    --accent-color: #FF69B4;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--primary-color);
+    background-image: linear-gradient(135deg, #FFECE5 0%, #FFE2D9 100%);
+    
+}
+
+.training-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem;
+    margin-bottom: 6rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+.training-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.training-header h1 {
+    color: var(--text-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.training-header p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+.upload-section {
+    background: #fff;
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px dashed var(--accent-color);
+}
+
+.upload-section h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.dropzone {
+    padding: 2rem;
+    text-align: center;
+    background: #fafafa;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropzone:hover {
+    background: #f0f0f0;
+}
+
+.option-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-top: 2rem ;
+    margin-bottom: 2rem;
+}
+
+.option-card h4 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.option-card label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.option-card select, .option-card input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.learning-rate-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.learning-rate-input {
+    width: 120px !important;
+}
+
+.learning-rate-slider {
+    flex-grow: 1;
+}
+
+.start-training-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    margin-top: 1rem;
+}
+
+.start-training-btn:hover {
+    background-color: #ff4da6;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+
+
+
+.files-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.files-table th, .files-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.files-table th {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.files-table tbody tr:hover {
+    background-color: #f8f8f8;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+.login-btn {
+    padding: 0.8rem 2rem;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.login-btn:hover {
+    transform: scale(1.05);
+    background-color: #ff4da6;
+    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3);
+}
+.nav-links a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(255, 105, 180, 0.1);
+    margin-bottom: 6rem;
+}
+
+@media (max-width: 768px) {
+    .training-container {
+        padding: 1.5rem;
+    }
+    
+    .training-header h1 {
+        font-size: 2rem;
+    }
+    
+    .learning-rate-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .learning-rate-input {
+        width: 100% !important;
+    }
+
+    .nav-container {
+        gap: 1rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+}
+
+    .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        /* Loading modal styles */
+        .loading-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-modal-content {
+            text-align: center;
+            color: white;
+        }
+
+        .spinner {
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top: 6px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
