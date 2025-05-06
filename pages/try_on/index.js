@@ -1,5 +1,7 @@
 import React from 'react';
+import { useState } from 'react';
 import { ShoppingCart } from "lucide-react";
+import Cart from '../../Component/Cart.js'; // Adjust the import path as necessary
 
 const products = [
     { id: 1, name: 'Summer Floral Dress', image: '/static/images/good.webp', rating: 4 },
@@ -15,16 +17,28 @@ const products = [
     { id: 11, name: 'Casual T-Shirt', image: '/static/images/good.webp', rating: 4 },
     { id: 12, name: 'Elegant Skirt', image: '/static/images/good.webp', rating: 5 },
 ];
-function addToCart(id){
-    
-    console.log(`Product with ID ${id} added to cart`);
-    
-}
-function openCart(){
-    console.log("Cart opened");
-}
+
+
 
 export default function ProductGallery() {
+    function addToCart(id){
+    
+        console.log(`Product with ID ${id} added to cart`);
+        const product = products.find(product => product.id === id);
+        if (product) {
+            setCartItems((prevCart) => [...prevCart, product]);
+            console.log("Product added to cart:", product);
+        } else {
+            console.log("Product not found");
+        }
+        
+    }
+    function openCart(){
+        console.log("Cart opened");
+        setShowCart(true)
+    }
+    const [cartItems, setCartItems] = useState([]);
+    const [showCart, setShowCart] = useState(false);
     return (
         <div className="product-page">
             <div className="logo-container">
@@ -40,6 +54,7 @@ export default function ProductGallery() {
                 <ShoppingCart size={50} style={{ width: 'auto', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }} />
                 Cart
             </button>
+            {showCart && <Cart c={cartItems} />}
             <div className="product-header">
                 <h1>Our Latest Collection</h1>
                 <p>Browse our stylish outfits for your virtual try-on experience</p>
@@ -90,7 +105,7 @@ export default function ProductGallery() {
                     text-transform: uppercase;
                     }
                 .cart-btn {
-                    width: 'auto';
+                    width: auto;
                     padding: 1.2rem 2rem;
                 }
                 .cart-btn {
