@@ -1,20 +1,9 @@
 import React from 'react';
 import { ShoppingCart } from "lucide-react";
+import { useEffect, useState } from 'react';
 
-const products = [
-    { id: 1, name: 'Summer Floral Dress', image: '/static/images/good.webp', rating: 4 },
-    { id: 2, name: 'Classic Denim Jacket', image: '/static/images/good.webp', rating: 5 },
-    { id: 3, name: 'Casual White Sneakers', image: '/static/images/good.webp', rating: 4 },
-    { id: 4, name: 'Elegant Black Dress', image: '/static/images/good.webp', rating: 5 },
-    { id: 5, name: 'Stylish Sunglasses', image: '/static/images/good.webp', rating: 4 },
-    { id: 6, name: 'Trendy Backpack', image: '/static/images/good.webp', rating: 5 },
-    { id: 7, name: 'Sporty Tracksuit', image: '/static/images/good.webp', rating: 4 },
-    { id: 8, name: 'Chic Handbag', image: '/static/images/good.webp', rating: 5 },
-    { id: 9, name: 'Comfortable Hoodie', image: '/static/images/good.webp', rating: 4 },
-    { id: 10, name: 'Stylish Watch', image: '/static/images/good.webp', rating: 5 },
-    { id: 11, name: 'Casual T-Shirt', image: '/static/images/good.webp', rating: 4 },
-    { id: 12, name: 'Elegant Skirt', image: '/static/images/good.webp', rating: 5 },
-];
+
+
 function addToCart(id){
     
     console.log(`Product with ID ${id} added to cart`);
@@ -25,6 +14,37 @@ function openCart(){
 }
 
 export default function ProductGallery() {
+
+    const [products, setProducts] = useState([]); // State to hold fetched products
+  const [loading, setLoading] = useState(true);  // Loading state
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const res = await fetch('/api/getProducts');
+            const data = await res.json();
+            if (data.success) {
+              setProducts(data.products);  
+            } else {
+              console.error('Failed to fetch products');
+            }
+          } catch (error) {
+            console.error('Error fetching products:', error);
+          } finally {
+            setLoading(false); 
+          }
+        };
+    
+        fetchProducts();
+      }, []); 
+    
+    
+      if (loading) {
+        return <div>Loading products...</div>;  // Display loading message while fetching
+      }
+    
+
+
     return (
         <div className="product-page">
             <div className="logo-container">
