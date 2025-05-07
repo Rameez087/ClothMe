@@ -49,6 +49,45 @@ export default function ProductGallery() {
     }
     const [cartItems, setCartItems] = useState([]);
     const [showCart, setShowCart] = useState(false);
+    console.log(`Product with ID ${id} added to cart`);
+    
+}
+function openCart(){
+    console.log("Cart opened");
+}
+
+export default function ProductGallery() {
+
+    const [products, setProducts] = useState([]); // State to hold fetched products
+  const [loading, setLoading] = useState(true);  // Loading state
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const res = await fetch('/api/getProducts');
+            const data = await res.json();
+            if (data.success) {
+              setProducts(data.products);  
+            } else {
+              console.error('Failed to fetch products');
+            }
+          } catch (error) {
+            console.error('Error fetching products:', error);
+          } finally {
+            setLoading(false); 
+          }
+        };
+    
+        fetchProducts();
+      }, []); 
+    
+    
+      if (loading) {
+        return <div>Loading products...</div>;  // Display loading message while fetching
+      }
+    
+
+
     return (
         <CartContext.Provider value={{ cartItems, setCartItems }}>
         <div className="product-page">
