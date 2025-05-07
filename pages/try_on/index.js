@@ -4,28 +4,17 @@ import { ShoppingCart } from "lucide-react";
 import Cart from '../../Component/Cart.js';
 import CartContext from '../../pages/context/CartContext.js'; 
 
-const products = [
-    { id: 1, name: 'Summer Floral Dress', image: '/static/images/good.webp', rating: 4 },
-    { id: 2, name: 'Classic Denim Jacket', image: '/static/images/good.webp', rating: 5 },
-    { id: 3, name: 'Casual White Sneakers', image: '/static/images/good.webp', rating: 4 },
-    { id: 4, name: 'Elegant Black Dress', image: '/static/images/good.webp', rating: 5 },
-    { id: 5, name: 'Stylish Sunglasses', image: '/static/images/good.webp', rating: 4 },
-    { id: 6, name: 'Trendy Backpack', image: '/static/images/good.webp', rating: 5 },
-    { id: 7, name: 'Sporty Tracksuit', image: '/static/images/good.webp', rating: 4 },
-    { id: 8, name: 'Chic Handbag', image: '/static/images/good.webp', rating: 5 },
-    { id: 9, name: 'Comfortable Hoodie', image: '/static/images/good.webp', rating: 4 },
-    { id: 10, name: 'Stylish Watch', image: '/static/images/good.webp', rating: 5 },
-    { id: 11, name: 'Casual T-Shirt', image: '/static/images/good.webp', rating: 4 },
-    { id: 12, name: 'Elegant Skirt', image: '/static/images/good.webp', rating: 5 },
-];
+import { useEffect } from 'react';
+import { useContext } from 'react';
 
 
 
 export default function ProductGallery() {
     function addToCart(id){
-        if(!cartItems.find(item=> item.id === id)){
+        
+        if(!cartItems.find(item=> item._id === id)){
             console.log(`Product with ID ${id} added to cart`);
-            const product = products.find(product => product.id === id);
+            const product = products.find(product => product._id === id);
             if (product) {
                 setCartItems((prevCart) => [...prevCart, product]);
                 console.log("Product added to cart:", product);
@@ -49,17 +38,15 @@ export default function ProductGallery() {
     }
     const [cartItems, setCartItems] = useState([]);
     const [showCart, setShowCart] = useState(false);
-    console.log(`Product with ID ${id} added to cart`);
     
-}
-function openCart(){
-    console.log("Cart opened");
-}
+ 
 
-export default function ProductGallery() {
+
+
+
 
     const [products, setProducts] = useState([]); // State to hold fetched products
-  const [loading, setLoading] = useState(true);  // Loading state
+    const [loading, setLoading] = useState(true);  // Loading state
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -89,6 +76,7 @@ export default function ProductGallery() {
 
 
     return (
+        
         <CartContext.Provider value={{ cartItems, setCartItems }}>
         <div className="product-page">
             <div className="logo-container">
@@ -113,7 +101,7 @@ export default function ProductGallery() {
             <div className="product-grid">
                 {products.map((product) => (
 
-                    <div className="product-card" key={product.id}>
+                    <div className="product-card" key={product._id}>
                         <img src={product.image} alt={product.name} className="product-img" />
                         <h3>{product.name}</h3>
                         <div className="rating">
@@ -122,7 +110,7 @@ export default function ProductGallery() {
                             ))}
                         </div>
                         <button className="model-btn try-btn">Try On</button>
-                        <button className="model-btn try-btn" onClick={()=>addToCart(product.id)}>Buy Now</button>
+                        <button className="model-btn try-btn" onClick={()=>addToCart(product._id)}>Buy Now</button>
                     </div>
                 )
                 )}
@@ -264,3 +252,4 @@ export default function ProductGallery() {
         </CartContext.Provider>
     );
 }
+

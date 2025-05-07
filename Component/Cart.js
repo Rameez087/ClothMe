@@ -1,13 +1,14 @@
 import React, { useState } from 'react';    
 import CartContext from '../pages/context/CartContext';
 import { useContext } from 'react';
+import { useEffect } from 'react';
 export default function Cart(props) {
     const { cartItems, setCartItems } = useContext(CartContext);
     function removeItem(id){
         console.log(`Product with ID ${id} removed from cart`);
-        const product = props.c.find(product => product.id === id);
+        const product = props.c.find(product => product._id === id);
         if (product) {
-            setCartItems((prevCart) => prevCart.filter(item => item.id !== id));
+            setCartItems((prevCart) => prevCart.filter(item => item._id !== id));
             console.log("Product removed from cart:", product);
         } else {
             console.log("Product not found in cart");
@@ -20,12 +21,12 @@ export default function Cart(props) {
             
             <div className="product-grid">
                 {props.c.map((item) => (
-                    <div className="product-card" key={item.id}>
+                    <div className="product-card" key={item._id}>
                         <img src={item.image} alt={item.name} className="product-img" />
                         <div className="cart-item-details">
                             <h3>{item.name}</h3>
                             <p>Price: ${item.rating}</p>
-                            <button className="model-btn try-btn" onClick={()=>removeItem(item.id)}>Remove</button>
+                            <button className="model-btn try-btn" onClick={()=>removeItem(item._id)}>Remove</button>
                         </div>
                     </div>
                 ))}
