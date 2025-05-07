@@ -1,0 +1,66 @@
+/* styles/Register.module.css */
+.registerContainer {
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+  }
+  
+  .logoContainer {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .logo {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+  }
+  
+  .formGrid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .formSection {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .inputGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .inputGroup label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .inputGroup input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    color: #222;
+  }
+  
+  .registerBtn {
+    margin-top: 1rem;
+    background-color: #000;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .waveDecoration {
+    height: 100px;
+    background: url('/static/images/wave.svg') no-repeat bottom center;
+    background-size: cover;
+  }
+  

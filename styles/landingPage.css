@@ -1,21 +1,6 @@
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
 
-:root {
-    --primary-color: #FFECE5;  /* Updated to match image background */
-    --text-color: #4A4A4A;
-    --accent-color: #FF69B4;
-}
 
-body {
-    background-color: var(--primary-color);
-    background-image: linear-gradient(135deg, #FFECE5 0%, #FFE2D9 100%); /* Added subtle gradient */
-}
 
 .navbar {
     display: flex;
@@ -194,9 +179,7 @@ body {
     animation: float 6s ease-in-out infinite;
 }
 
-a {
-  text-decoration: none !important;
-}
+
 
 @media (max-width: 1024px) {
     .hero-section {

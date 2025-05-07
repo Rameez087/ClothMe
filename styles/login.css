@@ -61,6 +61,7 @@ body {
 .logo {
     width: 150px;
     margin-bottom: 2rem;
+    cursor: pointer;
 }
 
 .login-form h2 {
@@ -79,6 +80,7 @@ body {
     margin-bottom: 0.5rem;
     color: var(--text-color);
     font-weight: 500;
+    color: #222;
 }
 
 .input-group input {
@@ -88,6 +90,7 @@ body {
     border-radius: 10px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    color: #222;
 }
 
 .input-group input:focus {

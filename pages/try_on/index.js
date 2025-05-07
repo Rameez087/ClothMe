@@ -6,7 +6,7 @@ import CartContext from '../../pages/context/CartContext.js';
 
 import { useEffect } from 'react';
 import { useContext } from 'react';
-
+import Navbar from '../../Component/navbar.js';
 
 
 export default function ProductGallery() {
@@ -76,8 +76,9 @@ export default function ProductGallery() {
 
 
     return (
-        
         <CartContext.Provider value={{ cartItems, setCartItems }}>
+        <Navbar/>
+
         <div className="product-page">
             <div className="logo-container">
                 <img

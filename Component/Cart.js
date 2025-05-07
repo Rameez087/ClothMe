@@ -25,14 +25,14 @@ export default function Cart(props) {
                         <img src={item.image} alt={item.name} className="product-img" />
                         <div className="cart-item-details">
                             <h3>{item.name}</h3>
-                            <p>Price: ${item.rating}</p>
+                            <p>Price: ${item.price}</p>
                             <button className="model-btn try-btn" onClick={()=>removeItem(item._id)}>Remove</button>
                         </div>
                     </div>
                 ))}
             </div>
             <div className="total-btn try-btn">
-                <h2>Total: ${props.c.reduce((total, item) => total + item.rating, 0)}</h2>
+                <h2>Total: ${props.c.reduce((total, item) => total + item.price, 0)}</h2>
             </div>
             <button className="checkout-btn try-btn">Checkout</button>
             <style jsx>{`
