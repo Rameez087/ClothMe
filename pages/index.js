@@ -65,10 +65,10 @@ export default function HomePage() {
             Train the system with your own wardrobe for personalized recommendations.
           </p>
           <div className="cta-buttons">
-            <Link href="/options" className="cta-btn primary-btn">
+            <Link href="/try_on" className="cta-btn primary-btn">
               Try Now
             </Link>
-            <button className="cta-btn secondary-btn">Learn More</button>
+            
           </div>
         </div>
         <div className="hero-image">

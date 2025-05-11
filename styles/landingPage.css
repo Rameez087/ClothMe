@@ -18,6 +18,10 @@ body {
 }
 
 .navbar {
+    position: fixed; /* Fixes it to the top */
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,9 +29,9 @@ body {
     background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 20px rgba(255, 105, 180, 0.1);
-    top: 0;
-    left: 0;
+    z-index: 1000; /* Ensures it stays above other content */
 }
+
 
 .logo {
     height: 50px;
@@ -91,7 +95,14 @@ body {
     gap: 4rem;
     min-height: calc(100vh - 80px);
     position: relative;
+    margin-top: 80px; /* So it's not hidden under the fixed navbar */
+    
+    box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+    width: 100vw; /* Viewport width */
+    margin-left: 0;
+    margin-right: 0;
 }
+
 
 .hero-section::before {
     content: '';
@@ -106,13 +117,13 @@ body {
 
 .hero-content {
     flex: 1;
-    max-width: 600px;
+    max-width: 1200px;
     position: relative;
     z-index: 1;
 }
 
 .hero-content h1 {
-    font-size: 4.5rem;
+    font-size: 6.5rem;
     margin-bottom: 1.5rem;
     color: var(--text-color);
     line-height: 1.1;
@@ -121,7 +132,7 @@ body {
 }
 
 .hero-content p {
-    font-size: 1.2rem;
+    font-size: 1.9rem;
     margin-bottom: 2.5rem;
     color: #666;
     line-height: 1.8;
@@ -178,7 +189,7 @@ body {
 
 .hero-model {
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
     height: auto;
     border-radius: 30px;
     box-shadow: 0 20px 40px rgba(255, 105, 180, 0.2);
