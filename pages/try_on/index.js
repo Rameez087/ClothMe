@@ -171,6 +171,7 @@ export default function ProductGallery({ products: staticProducts }) {
                 .cart-btn {
                     width: auto;
                     padding: 1.2rem 2rem;
+                    margin-top: 7rem;
                 }
                 .cart-btn {
                     padding: 1.5rem 4rem;
