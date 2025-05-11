@@ -7,9 +7,30 @@ import CartContext from '../../pages/context/CartContext.js';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import Navbar from '../../Component/navbar.js';
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/router.js';
 
 
 export default function ProductGallery() {
+    const router = useRouter()
+    const { data: session, status } = useSession();
+        
+        // Use useEffect to handle redirection after component mounts
+    useEffect(() => {
+        if (status === 'unauthenticated') {
+            console.log("login first");
+            router.push('/login');
+        }
+    }, [status, router]);
+
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+    
+    if (!session) {
+        return null;
+    }
+
     function addToCart(id){
         
         if(!cartItems.find(item=> item._id === id)){
