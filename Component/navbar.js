@@ -11,7 +11,7 @@ export default function Navbar() {
   function handleImageClick(){
     router.push('/')
   }
-  return (
+  return (<div>
     <nav className="navbar">
             <Image
               className="logo"
@@ -31,5 +31,7 @@ export default function Navbar() {
               <button className="login-btn" onClick={()=>handleLogin()}>Login</button>
             </div>
           </nav>
+          
+          </div>
   );
 }

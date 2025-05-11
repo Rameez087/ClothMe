@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Navbar from "@/Component/navbar";
 
 export default function HomePage() {
   const router = useRouter();
@@ -53,24 +54,7 @@ export default function HomePage() {
 
   return (
     <div>
-      <nav className="navbar">
-        <Image
-          className="logo"
-          src="/static/images/logotransparent.png"
-          alt="ClothMe! logo featuring a pink circle with white hanger icon and stylized text"
-          width={150}
-          height={50}
-        />
-        <div className="nav-container">
-          <div className="nav-links">
-            <a href="/about">About Us</a>
-            <a href="/services">Our Services</a>
-            <a href="/demo">Demo</a>
-            <a href="/subscribe">Subscribe</a>
-          </div>
-          <button className="login-btn">Login</button>
-        </div>
-      </nav>
+      <Navbar/>
 
       <section className="hero-section">
         <div className="hero-content">

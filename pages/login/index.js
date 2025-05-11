@@ -77,9 +77,7 @@ export default function Login() {
                                 {loginError}
                             </div>
                         )}
-                        <div className="forgot-password">
-                            <a href="/reset-password">Forgot Password?</a>
-                        </div>
+                        
                         <button type="submit" className="login-btn">Log In</button>
                         <p className="signup-link">
                             Don't have an account? <a href="/signup">Sign Up</a>

@@ -1,17 +1,23 @@
-import clientPromise from '../../lib/mongodb';
+// pages/api/login.js
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.MONGODB_URI;
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email and password required' });
+    }
+
+    let client;
+
     try {
-      const { email, password } = req.body;
-
-      if (!email || !password) {
-        return res.status(400).json({ success: false, message: 'Email and password required' });
-      }
-
-      const client = await clientPromise;
-      const db = client.db();
-      const collection = db.collection('users'); 
+      client = new MongoClient(uri);
+      await client.connect();
+      const db = client.db(); // optionally specify db name: client.db("your-db-name")
+      const collection = db.collection('users');
 
       const user = await collection.findOne({ email, password });
 
@@ -24,6 +30,10 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error('POST error:', error);
       return res.status(500).json({ success: false, message: 'Login failed' });
+    } finally {
+      if (client) {
+        await client.close();
+      }
     }
   } else {
     return res.status(405).json({ message: 'Only POST requests allowed' });
