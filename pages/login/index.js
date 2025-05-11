@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
     const router = useRouter();
@@ -10,24 +11,21 @@ export default function Login() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        console.log(`email: ${email}, password: ${password}`);
-
         try {
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+            // Use Next-Auth signIn
+            const result = await signIn("credentials", {
+                redirect: false,
+                email,
+                password,
             });
 
-            const data = await res.json();
-
-            if (data.success) {
+            if (!result.error) {
                 console.log('Login successful');
                 router.push('/');
-                setLoginError('')
+                setLoginError('');
             } else {
-                setLoginError('Invalid email or password.')
-                console.error('Login failed:', data.message);
+                setLoginError('Invalid email or password.');
+                console.error('Login failed:', result.error);
             }
         } catch (err) {
             console.error('Request failed:', err);
