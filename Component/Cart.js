@@ -3,7 +3,10 @@ import CartContext from '../pages/context/CartContext';
 import { useContext } from 'react';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 export default function Cart(props) {
+    const router = useRouter();
     const { cartItems, setCartItems } = useContext(CartContext);
     function removeItem(id){
         console.log(`Product with ID ${id} removed from cart`);
@@ -14,6 +17,9 @@ export default function Cart(props) {
         } else {
             console.log("Product not found in cart");
         }
+    }
+    function checkoutHandler(){
+        router.push('/checkout')
     }
     return(
         <div className="cart-page">

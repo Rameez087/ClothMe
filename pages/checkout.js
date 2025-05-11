@@ -1,6 +1,7 @@
 // /pages/checkout.js
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Navbar from "@/Component/navbar";
 
 export default function CheckoutPage() {
   const [form, setForm] = useState({ name: "", address: "", phone: "" });
@@ -50,7 +51,8 @@ export default function CheckoutPage() {
     }
   };
 
-  return (
+  return (<>
+    <Navbar/>
     <div className="checkout-container">
       <h2>Enter Shipping Details</h2>
       <form onSubmit={handleFormSubmit}>
@@ -78,5 +80,6 @@ export default function CheckoutPage() {
         <button type="submit">Proceed to Payment</button>
       </form>
     </div>
+    </>
   );
 }

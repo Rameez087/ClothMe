@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Navbar from "@/Component/navbar";
 
 export default function PaymentPage() {
   const [paymentDetails, setPaymentDetails] = useState({ cardNumber: "", expiry: "", cvv: "" });
@@ -26,6 +27,8 @@ export default function PaymentPage() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="payment-container">
       <h2>Enter Payment Details</h2>
       <form onSubmit={handlePaymentSubmit}>
@@ -34,23 +37,29 @@ export default function PaymentPage() {
           placeholder="Card Number"
           value={paymentDetails.cardNumber}
           onChange={(e) => setPaymentDetails({ ...paymentDetails, cardNumber: e.target.value })}
+          required
         />
         <input
           type="text"
           placeholder="Expiry Date"
           value={paymentDetails.expiry}
           onChange={(e) => setPaymentDetails({ ...paymentDetails, expiry: e.target.value })}
+          required
+
         />
         <input
           type="text"
           placeholder="CVV"
           value={paymentDetails.cvv}
           onChange={(e) => setPaymentDetails({ ...paymentDetails, cvv: e.target.value })}
+          required
+
         />
         <button type="submit" disabled={isProcessing}>
           {isProcessing ? "Processing..." : "Pay Now"}
         </button>
       </form>
     </div>
+    </>
   );
 }

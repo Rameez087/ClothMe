@@ -1,5 +1,5 @@
 // /pages/api/submit-order.js
-import clientPromise from "../../lib/mongodb";  // Ensure MongoDB is connected
+import {connectToDB} from "../../lib/mongodb";  // Ensure MongoDB is connected
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -11,10 +11,9 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, message: "Missing required fields" });
       }
 
-      const client = await clientPromise;
-      const db = client.db();
-      const collection = db.collection("orders");  // Ensure you're using the correct collection
-
+      const db = await connectToDB();
+      const collection = await db.collection('orders')
+      console.log(collection)
       // Create a new order object
       const newOrder = {
         name,

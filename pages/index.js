@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,49 +6,7 @@ import Navbar from "@/Component/navbar";
 
 export default function HomePage() {
   const router = useRouter();
-  useEffect(() => {
-    // Smooth scrolling for internal links
-    const anchors = document.querySelectorAll('a[href^="#"]');
-    anchors.forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth',
-        });
-      });
-    });
 
-    // Login button alert
-    const loginBtn = document.querySelector('.login-btn');
-    if (loginBtn) {
-      loginBtn.addEventListener('click', () => {
-        router.push('/login')
-      });
-    }
-
-    // Secondary button scroll to about
-    const secondaryBtn = document.querySelector('.secondary-btn');
-    if (secondaryBtn) {
-      secondaryBtn.addEventListener('click', () => {
-        document.querySelector('#about').scrollIntoView({
-          behavior: 'smooth',
-        });
-      });
-    }
-
-    // Cleanup event listeners on unmount
-    return () => {
-      anchors.forEach(anchor => {
-        anchor.removeEventListener('click', () => {});
-      });
-      if (loginBtn) {
-        loginBtn.removeEventListener('click', () => {});
-      }
-      if (secondaryBtn) {
-        secondaryBtn.removeEventListener('click', () => {});
-      }
-    };
-  }, []);
 
   return (
     <div>

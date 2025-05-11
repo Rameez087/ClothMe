@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Navbar() {
   const router = useRouter();
@@ -40,10 +41,11 @@ export default function Navbar() {
           style={{ cursor: 'pointer' }}
         />
         <div className="nav-container">
-          <div className="nav-links">
-            <a href="/try_on">TryOn</a>
-            <a href="/services">Our Services</a>
-            <a href="/about">About Us</a>
+          <div className="nav-links">     
+            <Link href="/try_on">TryOn</Link>
+            <Link href="/services">Our Services</Link>
+            <Link href="/about">About Us</Link>
+            <Link href="/history">History</Link>
             {/* <a href="/subscribe">Subscribe</a> */}
           </div>
           
