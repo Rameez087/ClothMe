@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import CartContext from '../pages/context/CartContext';
 import { useContext } from 'react';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 export default function Cart(props) {
+    const router = useRouter();
     const { cartItems, setCartItems } = useContext(CartContext);
     function removeItem(id){
         console.log(`Product with ID ${id} removed from cart`);
@@ -13,6 +16,9 @@ export default function Cart(props) {
         } else {
             console.log("Product not found in cart");
         }
+    }
+    function checkoutHandler(){
+        router.push('/checkout')
     }
     return(
         <div className="cart-page">
@@ -34,7 +40,7 @@ export default function Cart(props) {
             <div className="total-btn try-btn">
                 <h2>Total: ${props.c.reduce((total, item) => total + item.price, 0)}</h2>
             </div>
-            <button className="checkout-btn try-btn">Checkout</button>
+            <button className="checkout-btn try-btn" onClick={()=>checkoutHandler()}>Checkout</button>
             <style jsx>{`
             .total-btn {
                     padding: 1.5rem 4rem;

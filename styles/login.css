@@ -104,16 +104,7 @@ body {
     margin-bottom: 1.5rem;
 }
 
-.forgot-password a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
 
-.forgot-password a:hover {
-    color: #ff4da6;
-}
 
 .login-btn {
     background-color: var(--accent-color);
@@ -139,14 +130,14 @@ body {
     color: var(--text-color);
 }
 
-.signup-link a {
+.signup-link .link {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.signup-link a:hover {
+.signup-link .link:hover {
     color: #ff4da6;
 }
 

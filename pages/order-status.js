@@ -1,3 +1,4 @@
+import Navbar from '@/Component/navbar';
 import { useState, useEffect } from 'react';
 
 export default function OrderStatusPage() {
@@ -50,6 +51,7 @@ export default function OrderStatusPage() {
 
   return (
     <div>
+      <Navbar/>
       <h1>Order Status</h1>
       <p>Your order status is: {orderStatus}</p>
     </div>
