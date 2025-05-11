@@ -63,10 +63,10 @@ export default function HomePage() {
         />
         <div className="nav-container">
           <div className="nav-links">
-            <a href="#about">About Us</a>
-            <a href="#services">Our Services</a>
-            <a href="#demo">Demo</a>
-            <a href="#subscribe">Subscribe</a>
+            <a href="/about">About Us</a>
+            <a href="/services">Our Services</a>
+            <a href="/demo">Demo</a>
+            <a href="/subscribe">Subscribe</a>
           </div>
           <button className="login-btn">Login</button>
         </div>

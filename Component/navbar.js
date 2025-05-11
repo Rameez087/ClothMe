@@ -8,7 +8,9 @@ export default function Navbar() {
   function handleLogin() {
     router.push('/login');
   }
-
+  function handleImageClick(){
+    router.push('/')
+  }
   return (
     <nav className="navbar">
             <Image
@@ -17,13 +19,14 @@ export default function Navbar() {
               alt="ClothMe! logo featuring a pink circle with white hanger icon and stylized text"
               width={150}
               height={50}
+              onClick={(e)=>handleImageClick()}
             />
             <div className="nav-container">
               <div className="nav-links">
+                <a href="/try_on">TryOn</a>
+                <a href="/services">Our Services</a>
                 <a href="/about">About Us</a>
-                <a href="#services">Our Services</a>
-                <a href="#demo">Demo</a>
-                <a href="#subscribe">Subscribe</a>
+                {/* <a href="/subscribe">Subscribe</a> */}
               </div>
               <button className="login-btn" onClick={()=>handleLogin()}>Login</button>
             </div>

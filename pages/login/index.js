@@ -5,6 +5,7 @@ export default function Login() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loginError, setLoginError] = useState("");
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -23,9 +24,10 @@ export default function Login() {
             if (data.success) {
                 console.log('Login successful');
                 router.push('/');
+                setLoginError('')
             } else {
+                setLoginError('Invalid email or password.')
                 console.error('Login failed:', data.message);
-                // Optionally: display error to user
             }
         } catch (err) {
             console.error('Request failed:', err);
@@ -70,6 +72,11 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
+                        {loginError && (
+                            <div style={{ color: 'red', marginTop: '10px' }}>
+                                {loginError}
+                            </div>
+                        )}
                         <div className="forgot-password">
                             <a href="/reset-password">Forgot Password?</a>
                         </div>
@@ -77,6 +84,7 @@ export default function Login() {
                         <p className="signup-link">
                             Don't have an account? <a href="/signup">Sign Up</a>
                         </p>
+                        
                     </form>
                 </div>
             </div>

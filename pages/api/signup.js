@@ -22,7 +22,8 @@ export default async function handler(req, res) {
       email,
       password,
       name,
-      createdAt: new Date(),
+      address: "",
+      phone: "",
     });
 
     return res.status(201).json({

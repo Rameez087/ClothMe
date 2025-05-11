@@ -47,6 +47,7 @@ export default function ProductGallery() {
 
     const [products, setProducts] = useState([]); // State to hold fetched products
     const [loading, setLoading] = useState(true);  // Loading state
+    const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -80,15 +81,7 @@ export default function ProductGallery() {
         <Navbar/>
 
         <div className="product-page">
-            <div className="logo-container">
-                <img
-                    className="logo"
-                    src="/static/images/logotransparent.png"
-                    alt="ClothMe! logo"
-                    width="150"
-                    height="50"
-                />
-            </div>
+            
             <button className="cart-btn try-btn" onClick={()=>openCart()}>
                 <ShoppingCart size={50} style={{ width: 'auto', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }} />
                 Cart
@@ -99,22 +92,39 @@ export default function ProductGallery() {
                 <p>Browse our stylish outfits for your virtual try-on experience</p>
             </div>
 
-            <div className="product-grid">
-                {products.map((product) => (
+            <div className="search-bar" style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{
+                    padding: '0.5rem 1rem',
+                    fontSize: '1rem',
+                    borderRadius: '5px',
+                    border: '1px solid #ccc',
+                    width: '60%',
+                    maxWidth: '400px'
+                    }}
+                />
+            </div>
 
-                    <div className="product-card" key={product._id}>
+            <div className="product-grid">
+                {products.filter(
+                    product => product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    ).map(product => (
+                        <div className="product-card" key={product._id}>
                         <img src={product.image} alt={product.name} className="product-img" />
                         <h3>{product.name}</h3>
                         <div className="rating">
                             {[...Array(5)].map((_, i) => (
-                                <span key={i} className={i < product.rating ? 'filled' : ''}>★</span>
+                            <span key={i} className={i < product.rating ? 'filled' : ''}>★</span>
                             ))}
                         </div>
                         <button className="model-btn try-btn">Try On</button>
-                        <button className="model-btn try-btn" onClick={()=>addToCart(product._id)}>Buy Now</button>
-                    </div>
-                )
-                )}
+                        <button className="model-btn try-btn" onClick={() => addToCart(product._id)}>Buy Now</button>
+                        </div>
+                    ))}
             </div>
 
             <div className="wave-decoration"></div>
