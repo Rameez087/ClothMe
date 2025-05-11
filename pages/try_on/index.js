@@ -11,13 +11,32 @@ import { useSession } from "next-auth/react";
 import { useRouter } from 'next/router.js';
 
 
-export default function ProductGallery() {
+
+export async function getStaticProps() {
+  try {
+    const res = await fetch('http://localhost:3000/api/getProducts');
+    const data = await res.json();
+
+    return {
+      props: { products:data.products }, // Pass the products data to the component
+      revalidate: 60, 
+    };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return {
+      props: { products: [] },
+    };
+  }
+}
+
+
+export default function ProductGallery({ products: staticProducts }) {
     const router = useRouter()
     const { data: session, status } = useSession();
     const [cartItems, setCartItems] = useState([]);
     const [showCart, setShowCart] = useState(false);
-    const [products, setProducts] = useState([]); // State to hold fetched products
-    const [loading, setLoading] = useState(true);  // Loading state
+    const [products, setProducts] = useState(staticProducts); 
+    const [loading, setLoading] = useState(false);  // Loading state
     const [searchTerm, setSearchTerm] = useState('')
  
     useEffect(() => {
@@ -56,25 +75,7 @@ export default function ProductGallery() {
         }
     }
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-          try {
-            const res = await fetch('/api/getProducts');
-            const data = await res.json();
-            if (data.success) {
-              setProducts(data.products);  
-            } else {
-              console.error('Failed to fetch products');
-            }
-          } catch (error) {
-            console.error('Error fetching products:', error);
-          } finally {
-            setLoading(false); 
-          }
-        };
     
-        fetchProducts();
-      }, []); 
     
         // Show loading state while checking session
     if (status === 'loading') {
