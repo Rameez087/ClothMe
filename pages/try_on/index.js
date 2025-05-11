@@ -14,8 +14,12 @@ import { useRouter } from 'next/router.js';
 export default function ProductGallery() {
     const router = useRouter()
     const { data: session, status } = useSession();
-        
-        // Use useEffect to handle redirection after component mounts
+    const [cartItems, setCartItems] = useState([]);
+    const [showCart, setShowCart] = useState(false);
+    const [products, setProducts] = useState([]); // State to hold fetched products
+    const [loading, setLoading] = useState(true);  // Loading state
+    const [searchTerm, setSearchTerm] = useState('')
+ 
     useEffect(() => {
         if (status === 'unauthenticated') {
             console.log("login first");
@@ -23,13 +27,7 @@ export default function ProductGallery() {
         }
     }, [status, router]);
 
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
-    
-    if (!session) {
-        return null;
-    }
+
 
     function addToCart(id){
         
@@ -57,18 +55,6 @@ export default function ProductGallery() {
         setShowCart(true)
         }
     }
-    const [cartItems, setCartItems] = useState([]);
-    const [showCart, setShowCart] = useState(false);
-    
- 
-
-
-
-
-
-    const [products, setProducts] = useState([]); // State to hold fetched products
-    const [loading, setLoading] = useState(true);  // Loading state
-    const [searchTerm, setSearchTerm] = useState('')
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -90,7 +76,14 @@ export default function ProductGallery() {
         fetchProducts();
       }, []); 
     
+        // Show loading state while checking session
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
     
+    if (!session) {
+        return null;
+    }
       if (loading) {
         return <div>Loading products...</div>;  // Display loading message while fetching
       }
