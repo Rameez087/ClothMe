@@ -1,13 +1,10 @@
-// /pages/api/submit-order.js
 import { connectToDB } from "../../lib/mongodb";
 
 function generateOrderId() {
-  // Generates a random 8-character alphanumeric order ID
   return Math.random().toString(36).substr(2, 8).toLowerCase();
 }
 
 function generateTrackingId() {
-  // Generates a random 10-character alphanumeric tracking ID
   return Math.random().toString(36).substr(2, 10).toLowerCase();
 }
 
@@ -16,7 +13,9 @@ export default async function handler(req, res) {
     const { name, address, phone, email, items, totalAmount } = req.body;
 
     if (!name || !address || !phone || !email) {
-      return res.status(400).json({ success: false, message: 'All fields are required' });
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
     }
 
     try {
@@ -24,17 +23,16 @@ export default async function handler(req, res) {
       const orderId = generateOrderId();
       const trackingId = generateTrackingId();
 
-      // Save order to the database
       const order = {
         orderId,
         trackingId,
         name,
         address,
         phone,
-        email, // Store user email as unique identifier
+        email,
         items: items || [],
         totalAmount: totalAmount || 0,
-        status: 'pending',
+        status: "pending",
         date: new Date(),
       };
 
@@ -43,9 +41,11 @@ export default async function handler(req, res) {
       return res.status(200).json({ success: true, orderId, trackingId });
     } catch (error) {
       console.error("Error submitting order:", error);
-      return res.status(500).json({ success: false, message: 'Error submitting order' });
+      return res
+        .status(500)
+        .json({ success: false, message: "Error submitting order" });
     }
   } else {
-    res.status(405).json({ success: false, message: 'Method Not Allowed' });
+    res.status(405).json({ success: false, message: "Method Not Allowed" });
   }
 }

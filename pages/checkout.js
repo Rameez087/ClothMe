@@ -25,8 +25,7 @@ export default function CheckoutPage() {
   }, [status, session]);
 
   useEffect(() => {
-    // Get cart items from localStorage as a fallback
-    const storedCartItems = localStorage.getItem('cartItems');
+    const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     } else if (cartContext?.cartItems) {
@@ -38,13 +37,13 @@ export default function CheckoutPage() {
     try {
       const res = await fetch(`/api/get-user-details?email=${email}`);
       const data = await res.json();
-      
+
       if (data.success) {
         const { name, address, phone } = data.user;
         setForm({
           name: name || "",
           address: address || "",
-          phone: phone || ""
+          phone: phone || "",
         });
       } else {
         setError("Failed to fetch user data.");
@@ -59,42 +58,42 @@ export default function CheckoutPage() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!session?.user?.email) {
       router.push("/login");
       return;
     }
 
     if (cartItems.length === 0) {
-      alert("Your cart is empty. Please add items before proceeding to checkout.");
+      alert(
+        "Your cart is empty. Please add items before proceeding to checkout."
+      );
       return;
     }
 
     try {
-      // First update user details in the database
       const updateRes = await fetch("/api/update-user-details", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: session.user.email,
-          ...form
+          ...form,
         }),
       });
 
       const updateData = await updateRes.json();
-      
+
       if (!updateData.success) {
         throw new Error(updateData.message);
       }
 
-      // Then proceed with order submission
       const orderData = {
         name: form.name,
         address: form.address,
         phone: form.phone,
         email: session.user.email,
-        items: cartItems.map(item => item._id),
-        totalAmount: cartItems.reduce((total, item) => total + item.price, 0)
+        items: cartItems.map((item) => item._id),
+        totalAmount: cartItems.reduce((total, item) => total + item.price, 0),
       };
 
       const orderRes = await fetch("/api/submit-order", {
@@ -106,12 +105,11 @@ export default function CheckoutPage() {
       const orderResult = await orderRes.json();
 
       if (orderResult.success) {
-        // Store orderId for payment page to update status
         if (orderResult.orderId) {
-          localStorage.setItem('currentOrderId', orderResult.orderId);
+          localStorage.setItem("currentOrderId", orderResult.orderId);
         }
         if (orderResult.trackingId) {
-          localStorage.setItem('currentTrackingId', orderResult.trackingId);
+          localStorage.setItem("currentTrackingId", orderResult.trackingId);
         }
         router.push("/payment");
       } else {
@@ -188,7 +186,11 @@ export default function CheckoutPage() {
               <div className="cart-items">
                 {cartItems.map((item) => (
                   <div key={item._id} className="cart-item">
-                    <img src={item.image} alt={item.name} className="cart-item-image" />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="cart-item-image"
+                    />
                     <div className="cart-item-details">
                       <h3>{item.name}</h3>
                       <p>${item.price}</p>

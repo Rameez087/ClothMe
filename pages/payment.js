@@ -4,7 +4,11 @@ import Navbar from "@/Component/navbar";
 import CartContext from "./context/CartContext";
 
 export default function PaymentPage() {
-  const [paymentDetails, setPaymentDetails] = useState({ cardNumber: "", expiry: "", cvv: "" });
+  const [paymentDetails, setPaymentDetails] = useState({
+    cardNumber: "",
+    expiry: "",
+    cvv: "",
+  });
   const [isProcessing, setIsProcessing] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [orderStatus, setOrderStatus] = useState("pending");
@@ -15,8 +19,7 @@ export default function PaymentPage() {
   const cartContext = useContext(CartContext);
 
   useEffect(() => {
-    // Get cart items from localStorage as a fallback
-    const storedCartItems = localStorage.getItem('cartItems');
+    const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     } else if (cartContext?.cartItems) {
@@ -27,12 +30,11 @@ export default function PaymentPage() {
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
   function isValidExpiry(expiry) {
-    // Format: MM/YY
     if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) return false;
-    const [month, year] = expiry.split('/').map(Number);
+    const [month, year] = expiry.split("/").map(Number);
     const now = new Date();
-    const currentYear = now.getFullYear() % 100; // last two digits
-    const currentMonth = now.getMonth() + 1; // 1-based
+    const currentYear = now.getFullYear() % 100;
+    const currentMonth = now.getMonth() + 1;
     if (year < currentYear) return false;
     if (year === currentYear && month < currentMonth) return false;
     return true;
@@ -50,7 +52,9 @@ export default function PaymentPage() {
       valid = false;
     }
     if (!isValidExpiry(paymentDetails.expiry)) {
-      setExpiryError("Please enter a valid expiry date (MM/YY) that is not in the past.");
+      setExpiryError(
+        "Please enter a valid expiry date (MM/YY) that is not in the past."
+      );
       valid = false;
     }
     if (!/^[0-9]{3}$/.test(paymentDetails.cvv)) {
@@ -70,21 +74,18 @@ export default function PaymentPage() {
     const data = await res.json();
     if (data.success) {
       setOrderStatus("paid");
-      // Update order status to confirmed
-      const orderId = localStorage.getItem('currentOrderId');
+      const orderId = localStorage.getItem("currentOrderId");
       if (orderId) {
         await fetch("/api/update-order-status", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ orderId, status: "confirmed" }),
         });
-        localStorage.removeItem('currentOrderId');
+        localStorage.removeItem("currentOrderId");
       }
-      // Get trackingId from localStorage and redirect
-      const trackingId = localStorage.getItem('currentTrackingId');
-      localStorage.removeItem('currentTrackingId');
-      // Clear cart after successful payment
-      localStorage.removeItem('cartItems');
+      const trackingId = localStorage.getItem("currentTrackingId");
+      localStorage.removeItem("currentTrackingId");
+      localStorage.removeItem("cartItems");
       if (cartContext?.setCartItems) {
         cartContext.setCartItems([]);
       }
@@ -101,7 +102,7 @@ export default function PaymentPage() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="checkout-page">
         <div className="checkout-container">
           <h2>Enter Payment Details</h2>
@@ -110,24 +111,26 @@ export default function PaymentPage() {
               type="text"
               placeholder="Card Number"
               value={paymentDetails.cardNumber}
-              onChange={e => {
-                // Only allow numbers, max 16 digits
-                const value = e.target.value.replace(/\D/g, '').slice(0, 16);
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "").slice(0, 16);
                 setPaymentDetails({ ...paymentDetails, cardNumber: value });
               }}
               maxLength={16}
               required
             />
-            {cardError && <div style={{ color: 'red', fontSize: '0.9rem' }}>{cardError}</div>}
+            {cardError && (
+              <div style={{ color: "red", fontSize: "0.9rem" }}>
+                {cardError}
+              </div>
+            )}
             <input
               type="text"
               placeholder="Expiry Date (MM/YY)"
               value={paymentDetails.expiry}
-              onChange={e => {
-                // Only allow numbers and slash, format MM/YY, max 5 chars
-                let value = e.target.value.replace(/[^0-9/]/g, '');
+              onChange={(e) => {
+                let value = e.target.value.replace(/[^0-9/]/g, "");
                 if (value.length === 2 && paymentDetails.expiry.length === 1) {
-                  value += '/';
+                  value += "/";
                 }
                 value = value.slice(0, 5);
                 setPaymentDetails({ ...paymentDetails, expiry: value });
@@ -135,20 +138,25 @@ export default function PaymentPage() {
               maxLength={5}
               required
             />
-            {expiryError && <div style={{ color: 'red', fontSize: '0.9rem' }}>{expiryError}</div>}
+            {expiryError && (
+              <div style={{ color: "red", fontSize: "0.9rem" }}>
+                {expiryError}
+              </div>
+            )}
             <input
               type="text"
               placeholder="CVV"
               value={paymentDetails.cvv}
-              onChange={e => {
-                // Only allow numbers, max 3 digits
-                const value = e.target.value.replace(/\D/g, '').slice(0, 3);
+              onChange={(e) => {
+                const value = e.target.value.replace(/\D/g, "").slice(0, 3);
                 setPaymentDetails({ ...paymentDetails, cvv: value });
               }}
               maxLength={3}
               required
             />
-            {cvvError && <div style={{ color: 'red', fontSize: '0.9rem' }}>{cvvError}</div>}
+            {cvvError && (
+              <div style={{ color: "red", fontSize: "0.9rem" }}>{cvvError}</div>
+            )}
             <button type="submit" disabled={isProcessing}>
               {isProcessing ? "Processing..." : "Pay Now"}
             </button>
@@ -163,7 +171,11 @@ export default function PaymentPage() {
               <div className="cart-items">
                 {cartItems.map((item) => (
                   <div key={item._id} className="cart-item">
-                    <img src={item.image} alt={item.name} className="cart-item-image" />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="cart-item-image"
+                    />
                     <div className="cart-item-details">
                       <h3>{item.name}</h3>
                       <p>${item.price}</p>
@@ -174,7 +186,14 @@ export default function PaymentPage() {
               <div className="cart-total">
                 <h3>Total Amount: ${totalAmount.toFixed(2)}</h3>
                 <div className="order-status">
-                  <strong>Status:</strong> <span style={{ color: orderStatus === 'pending' ? 'orange' : 'green' }}>{orderStatus.charAt(0).toUpperCase() + orderStatus.slice(1)}</span>
+                  <strong>Status:</strong>{" "}
+                  <span
+                    style={{
+                      color: orderStatus === "pending" ? "orange" : "green",
+                    }}
+                  >
+                    {orderStatus.charAt(0).toUpperCase() + orderStatus.slice(1)}
+                  </span>
                 </div>
               </div>
             </>

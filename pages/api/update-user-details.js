@@ -15,7 +15,6 @@ export default async function handler(req, res) {
     const db = await connectToDB();
     const updateData = {};
     
-    // Only update fields that are provided
     if (name) updateData.name = name;
     if (address) updateData.address = address;
     if (phone) updateData.phone = phone;
