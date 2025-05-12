@@ -1,22 +1,24 @@
-import { getToken } from "next-auth/jwt";
+import { getSession } from "next-auth/react";
 import { connectToDB } from "../../lib/mongodb";
 import { ObjectId } from "mongodb"; 
 
-const secret = "any-string-will-work-in-development"; 
 
 export default async function handler(req, res) {
-  const token = await getToken({ req, secret });
 
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
 
 try {
+
     const db = await connectToDB();
+    console.log("1")
+   const session = await getSession({ req });
+   const email = session.user.email; 
+  console.log("email")
+  console.log(email)
+    console.log("2")
 
     const ordersRaw = await db
       .collection("orders")
-      .find({ email: token.email })
+      .find({ email: email })
       .sort({ date: -1 })
       .toArray();
 
