@@ -26,9 +26,6 @@ export default async function handler(req, res) {
       const order = {
         orderId,
         trackingId,
-        name,
-        address,
-        phone,
         email,
         items: items || [],
         totalAmount: totalAmount || 0,
