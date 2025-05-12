@@ -7,13 +7,13 @@ export async function getStaticPaths() {
         const res = await fetch('http://localhost:3000/api/getProducts');
         const data = await res.json();
 
-        // Ensure that products are available
+        
         if (!data.success || !data.products) {
             return { paths: [], fallback: 'blocking' };
         }
 
         const paths = data.products.map((product) => ({
-            params: { id: product._id.toString() }, // Ensure _id is a string
+            params: { id: product._id.toString() }, 
         }));
 
         return { paths, fallback: 'blocking' };
@@ -31,17 +31,16 @@ export async function getStaticProps({ params }) {
         const data = await res.json();
         console.log("Response from API:", data);
 
-        // If the product is not found or there's an error fetching it, return null
         if (!data.success || !data.product) {
             return { props: { product: null } };
         }
 
         return {
-            props: { product: data.product || null }, // Ensure product is never undefined
+            props: { product: data.product || null }, 
         };
     } catch (error) {
         console.error('Error fetching product:', error);
-        return { props: { product: null } };  // Return null if there's an error
+        return { props: { product: null } };  
     }
 }
 
