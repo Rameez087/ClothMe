@@ -46,7 +46,12 @@ export default function ProductGallery({ products: staticProducts }) {
         }
     }, [status, router]);
 
-
+    function ProductDetail(id){
+        console.log('------------------------------------------------------------------------')
+        router.push(`/products/${id}`);
+        console.log('------------------------------------------------------------------------')
+        console.log(`Product with ID ${id} clickedafdfadfsdadffasddfadfafadfasdsadf`);
+    }
 
     function addToCart(id){
         
@@ -136,7 +141,7 @@ export default function ProductGallery({ products: staticProducts }) {
                             <span key={i} className={i < product.rating ? 'filled' : ''}>★</span>
                             ))}
                         </div>
-                        <button className="model-btn try-btn">Try On</button>
+                        <button className="model-btn try-btn" onClick={()=>ProductDetail(product._id)}>Try On</button>
                         <button className="model-btn try-btn" onClick={() => addToCart(product._id)}>Buy Now</button>
                         </div>
                     ))}
