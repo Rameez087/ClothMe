@@ -6,15 +6,38 @@ import Navbar from '../../Component/navbar.js';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/router.js';
 
-export default function ProductGallery() {
-    const router = useRouter();
-    const { data: session, status } = useSession();
-    const { cartItems, setCartItems } = useContext(CartContext);
-    const [showCart, setShowCart] = useState(false);
-    const [products, setProducts] = useState([]); // State to hold fetched products
-    const [loading, setLoading] = useState(true);  // Loading state
-    const [searchTerm, setSearchTerm] = useState('');
- 
+export async function getStaticProps() {
+  try {
+    const res = await fetch('http://localhost:3000/api/getProducts');
+    const data = await res.json();
+
+    return {
+      props: { products: data.products }, // Pass the products data to the component
+      revalidate: 60, 
+    };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return {
+      props: { products: [] },
+    };
+  }
+}
+export default function ProductGallery({ products: staticProducts }) {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const { cartItems, setCartItems } = useContext(CartContext);
+
+  const [showCart, setShowCart] = useState(false);
+  const [products, setProducts] = useState(staticProducts); 
+  const [loading, setLoading] = useState(false);  
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      console.log("login first");
+      router.push('/login');
+    }
+  }, [status, router]);
     useEffect(() => {
         if (status === 'unauthenticated') {
             console.log("login first");
@@ -22,6 +45,12 @@ export default function ProductGallery() {
         }
     }, [status, router]);
 
+  function ProductDetail(id) {
+    console.log('------------------------------------------------------------------------')
+    router.push(`/products/${id}`);
+    console.log('------------------------------------------------------------------------')
+    console.log(`Product with ID ${id} clicked`);
+  }
     function addToCart(id){
         if(!cartItems.find(item=> item._id === id)){
             console.log(`Product with ID ${id} added to cart`);
@@ -40,25 +69,7 @@ export default function ProductGallery() {
         setShowCart((prev) => !prev);
     }
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-          try {
-            const res = await fetch('/api/getProducts');
-            const data = await res.json();
-            if (data.success) {
-              setProducts(data.products);  
-            } else {
-              console.error('Failed to fetch products');
-            }
-          } catch (error) {
-            console.error('Error fetching products:', error);
-          } finally {
-            setLoading(false); 
-          }
-        };
     
-        fetchProducts();
-      }, []); 
     
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -111,7 +122,7 @@ export default function ProductGallery() {
                             <span key={i} className={i < product.rating ? 'filled' : ''}>★</span>
                             ))}
                         </div>
-                        <button className="model-btn try-btn">Try On</button>
+                        <button className="model-btn try-btn" onClick={()=>ProductDetail(product._id)}>Try On</button>
                         <button className="model-btn try-btn" onClick={() => addToCart(product._id)}>Buy Now</button>
                         </div>
                     ))}
@@ -144,6 +155,7 @@ export default function ProductGallery() {
                 .cart-btn {
                     width: auto;
                     padding: 1.2rem 2rem;
+                    margin-top: 7rem;
                 }
                 .cart-btn {
                     padding: 1.5rem 4rem;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CartContext from '../pages/context/CartContext';
 import { useContext } from 'react';
 import { useEffect } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 export default function Cart(props) {
@@ -40,7 +41,12 @@ export default function Cart(props) {
             <div className="total-btn try-btn">
                 <h2>Total: ${props.c.reduce((total, item) => total + item.price, 0)}</h2>
             </div>
-            <button className="checkout-btn try-btn" onClick={()=>checkoutHandler()}>Checkout</button>
+                <Link href="/checkout" legacyBehavior>
+                <a>
+                    <button className="checkout-btn ">Checkout Now</button>
+                </a>
+                </Link>
+             
             <style jsx>{`
             .total-btn {
                     padding: 1.5rem 4rem;
@@ -56,7 +62,7 @@ export default function Cart(props) {
                     padding: 1.2rem 2rem;
                     }
             .checkout-btn {
-                    padding: 1.5rem 4rem;
+                    padding: 0.8rem 2rem;
                     border: none;
                     border-radius: 30px;
                     font-size: 1.2rem;
@@ -75,6 +81,18 @@ export default function Cart(props) {
                     box-shadow: 0 5px 15px rgba(255, 105, 180, 0.1);
                     }
                 .try-btn:hover {
+                    background-color: var(--accent-color);
+                    color: white;
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+                    }
+                    .checkout-btn {
+                    background-color: white;
+                    color: var(--accent-color);
+                    border: 2px solid var(--accent-color);
+                    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.1);
+                    }
+                .checkout-btn:hover {
                     background-color: var(--accent-color);
                     color: white;
                     transform: translateY(-5px);
@@ -107,7 +125,7 @@ export default function Cart(props) {
                     text-transform: uppercase;
                     }
                 .model-btn {
-                    width: 60%;
+                    width: 100%;
                     padding: 1.2rem 2rem;
                 }    
                 .product-page {

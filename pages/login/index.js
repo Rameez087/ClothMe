@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Link } from "lucide-react";
 
 export default function Login() {
     const router = useRouter();
@@ -19,7 +18,7 @@ export default function Login() {
                 email,
                 password,
             });
-
+            console.log(result)
             if (!result.error) {
                 console.log('Login successful');
                 router.push('/');
@@ -79,7 +78,7 @@ export default function Login() {
                         
                         <button type="submit" className="login-btn">Log In</button>
                         <p className="signup-link">
-                            Don't have an account? <Link href="/signup" className="link">Sign Up</Link>
+                            Don't have an account? <a href="/signup">Sign Up</a>
                         </p>
                         
                     </form>
