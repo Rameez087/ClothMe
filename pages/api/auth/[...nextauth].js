@@ -23,7 +23,6 @@ export default NextAuth({
         
 
 
-        // Return user if found, null otherwise
         if (user) {
           return {
             id: user._id.toString(),
@@ -38,17 +37,14 @@ export default NextAuth({
   ],
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    maxAge: 30 * 24 * 60 * 60, 
   },
   jwt: {
-    // No additional encryption, using default
   },
-  // using a simple secret
+  
   secret: "any-string-will-work-in-development",
-  // no custom pages required
   pages: {
     signIn: '/login'
   },
-  // Debug mode for development
   debug: true
 });

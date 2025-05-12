@@ -2,7 +2,7 @@ import { getToken } from "next-auth/jwt";
 import { connectToDB } from "../../lib/mongodb";
 import { ObjectId } from "mongodb"; 
 
-const secret = "any-string-will-work-in-development"; // Same as in [...nextauth].js
+const secret = "any-string-will-work-in-development"; 
 
 export default async function handler(req, res) {
   const token = await getToken({ req, secret });

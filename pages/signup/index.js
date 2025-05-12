@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import styles from '../../styles/Register.module.css'; // adjust the path if needed
+import styles from '../../styles/Register.module.css';
 import { useRouter } from 'next/router';
 
 export default function Register() {
@@ -41,7 +41,7 @@ export default function Register() {
       const data = await res.json();
       if (data.success) {
         alert('Registered successfully!');
-        router.push('/login'); // redirect to login page
+        router.push('/login'); 
       } else {
         alert(data.message || 'Registration failed.');
       }

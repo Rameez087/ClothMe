@@ -5,7 +5,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
-  // Load cart from localStorage on mount
+  
   useEffect(() => {
     const stored = localStorage.getItem('cartItems');
     if (stored) {
@@ -13,7 +13,7 @@ export function CartProvider({ children }) {
     }
   }, []);
 
-  // Sync cart to localStorage whenever it changes
+  
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);

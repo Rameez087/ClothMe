@@ -50,7 +50,6 @@ export async function getStaticProps({ params }) {
 export default function ProductDetail({ product }) {
     const router = useRouter();
 
-    // Handle the case when product data is not available
     if (!product) {
         return <div>Product not found. Please check the URL or try again later.</div>;
     }
@@ -64,8 +63,8 @@ export default function ProductDetail({ product }) {
                         src={product.image} 
                         alt={product.name} 
                         className="product-img" 
-                        width={500} // Define a fixed width to prevent layout shifts
-                        height={500} // Define a fixed height for better layout
+                        width={500} 
+                        height={500} 
                     />
                     <div className="product-info">
                         <h2>{product.name}</h2>

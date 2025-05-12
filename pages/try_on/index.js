@@ -12,7 +12,7 @@ export async function getStaticProps() {
     const data = await res.json();
 
     return {
-      props: { products: data.products }, // Pass the products data to the component
+      props: { products: data.products },
       revalidate: 60, 
     };
   } catch (error) {
@@ -78,7 +78,7 @@ export default function ProductGallery({ products: staticProducts }) {
         return null;
     }
     if (loading) {
-        return <div>Loading products...</div>;  // Display loading message while fetching
+        return <div>Loading products...</div>; 
     }
 
     return (

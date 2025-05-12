@@ -1,4 +1,3 @@
-// pages/api/payment.js
 import { processPayment } from "../../lib/payment";
 
 export default async function handler(req, res) {

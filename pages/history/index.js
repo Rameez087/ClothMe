@@ -127,7 +127,6 @@ const centered = {
   fontSize: "1.2rem",
 };
 
-// Status color helper
 const getStatusColor = (status) => {
   switch (status) {
     case "confirmed":
