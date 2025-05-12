@@ -99,12 +99,6 @@ body {
     box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
 }
 
-.forgot-password {
-    text-align: right;
-    margin-bottom: 1.5rem;
-}
-
-
 
 .login-btn {
     background-color: var(--accent-color);
@@ -130,14 +124,14 @@ body {
     color: var(--text-color);
 }
 
-.signup-link .link {
+.signup-link a {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
-.signup-link .link:hover {
+.signup-link a:hover {
     color: #ff4da6;
 }
 

@@ -1,5 +1,4 @@
-// pages/api/login.js
-import { MongoClient } from 'mongodb';
+import { connectToDB } from '../../lib/mongodb';
 
 const uri = process.env.MONGODB_URI;
 
@@ -14,9 +13,8 @@ export default async function handler(req, res) {
     let client;
 
     try {
-      client = new MongoClient(uri);
-      await client.connect();
-      const db = client.db(); // optionally specify db name: client.db("your-db-name")
+      const db = connectToDB()
+      const orders = await db
       const collection = db.collection('users');
 
       const user = await collection.findOne({ email, password });
