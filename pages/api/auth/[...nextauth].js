@@ -35,16 +35,10 @@ export default NextAuth({
       }
     })
   ],
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, 
-  },
-  jwt: {
-  },
-  
-  secret: "any-string-will-work-in-development",
+
+
   pages: {
     signIn: '/login'
   },
-  debug: true
+
 });

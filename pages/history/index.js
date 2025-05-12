@@ -1,11 +1,15 @@
 import Navbar from "@/Component/navbar";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function OrderHistory() {
   const { data: session, status } = useSession();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  if (!session) return (<><Navbar/>
+  <div style={centered}>Please log in to view your order history.</div></>);
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -21,10 +25,8 @@ export default function OrderHistory() {
   }, [status]);
 
   if (status === "loading" || loading) return <div style={centered}>Loading...</div>;
-  if (!session) return (<><Navbar/>
-  <div style={centered}>Please log in to view your order history.</div></>);
 
-  return (
+  return (  
     <>
       <Navbar />
       <div style={container}>

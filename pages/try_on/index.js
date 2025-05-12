@@ -76,7 +76,10 @@ export default function ProductGallery({ products: staticProducts }) {
     }
     if (!session) {
         return null;
+        
     }
+    else{  console.log(session)
+}
     if (loading) {
         return <div>Loading products...</div>; 
     }
