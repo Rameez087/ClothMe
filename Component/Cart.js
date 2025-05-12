@@ -125,7 +125,7 @@ export default function Cart(props) {
                     text-transform: uppercase;
                     }
                 .model-btn {
-                    width: 60%;
+                    width: 100%;
                     padding: 1.2rem 2rem;
                 }    
                 .product-page {
