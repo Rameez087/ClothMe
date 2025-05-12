@@ -1,20 +1,23 @@
 // pages/api/get-order-status.js
 
+import { connectToDB } from '../../lib/mongodb';
+
 export default async function handler(req, res) {
-  const { trackingId } = req.query;
-
-  if (!trackingId) {
-    return res.status(400).json({ success: false, message: 'Tracking ID is required' });
+  if (req.method !== 'GET') {
+    return res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
-
-  // Fetch the order status from your database or some other service
+  const { trackingId } = req.query;
+  if (!trackingId) {
+    return res.status(400).json({ success: false, message: 'trackingId is required' });
+  }
   try {
-    // Simulate a fetched order status (this could be a database query in a real application)
-    const orderStatus = 'Shipped';  // For example, you can return the order status based on the trackingId.
-
-    return res.status(200).json({ success: true, status: orderStatus });
+    const db = await connectToDB();
+    const order = await db.collection('orders').findOne({ trackingId });
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+    return res.status(200).json({ success: true, order });
   } catch (error) {
-    console.error('Error fetching order status:', error);
-    return res.status(500).json({ success: false, message: 'Error fetching order status' });
+    return res.status(500).json({ success: false, message: 'Internal server error' });
   }
 }

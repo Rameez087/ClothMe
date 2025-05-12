@@ -1,16 +1,10 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { ShoppingCart } from "lucide-react";
 import Cart from '../../Component/Cart.js';
 import CartContext from '../../pages/context/CartContext.js'; 
-
-import { useEffect } from 'react';
-import { useContext } from 'react';
 import Navbar from '../../Component/navbar.js';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/router.js';
-
-
 
 export async function getStaticProps() {
   try {
@@ -18,7 +12,7 @@ export async function getStaticProps() {
     const data = await res.json();
 
     return {
-      props: { products:data.products }, // Pass the products data to the component
+      props: { products: data.products }, // Pass the products data to the component
       revalidate: 60, 
     };
   } catch (error) {
@@ -28,17 +22,22 @@ export async function getStaticProps() {
     };
   }
 }
-
-
 export default function ProductGallery({ products: staticProducts }) {
-    const router = useRouter()
-    const { data: session, status } = useSession();
-    const [cartItems, setCartItems] = useState([]);
-    const [showCart, setShowCart] = useState(false);
-    const [products, setProducts] = useState(staticProducts); 
-    const [loading, setLoading] = useState(false);  // Loading state
-    const [searchTerm, setSearchTerm] = useState('')
- 
+  const router = useRouter();
+  const { data: session, status } = useSession();
+  const { cartItems, setCartItems } = useContext(CartContext);
+
+  const [showCart, setShowCart] = useState(false);
+  const [products, setProducts] = useState(staticProducts); 
+  const [loading, setLoading] = useState(false);  
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      console.log("login first");
+      router.push('/login');
+    }
+  }, [status, router]);
     useEffect(() => {
         if (status === 'unauthenticated') {
             console.log("login first");
@@ -46,15 +45,13 @@ export default function ProductGallery({ products: staticProducts }) {
         }
     }, [status, router]);
 
-    function ProductDetail(id){
-        console.log('------------------------------------------------------------------------')
-        router.push(`/products/${id}`);
-        console.log('------------------------------------------------------------------------')
-        console.log(`Product with ID ${id} clickedafdfadfsdadffasddfadfafadfasdsadf`);
-    }
-
+  function ProductDetail(id) {
+    console.log('------------------------------------------------------------------------')
+    router.push(`/products/${id}`);
+    console.log('------------------------------------------------------------------------')
+    console.log(`Product with ID ${id} clicked`);
+  }
     function addToCart(id){
-        
         if(!cartItems.find(item=> item._id === id)){
             console.log(`Product with ID ${id} added to cart`);
             const product = products.find(product => product._id === id);
@@ -64,45 +61,31 @@ export default function ProductGallery({ products: staticProducts }) {
             } else {
                 console.log("Product not found");
             }
-    }
-        else{
+        } else {
             console.log("Product already in cart")
         }
-        
     }
     function openCart(){
-        if (showCart) {
-            console.log("Cart opened");
-            setShowCart(false)
-        }else{
-        console.log("Cart opened");
-        setShowCart(true)
-        }
+        setShowCart((prev) => !prev);
     }
 
     
     
-        // Show loading state while checking session
     if (status === 'loading') {
         return <div>Loading...</div>;
     }
-    
     if (!session) {
         return null;
     }
-      if (loading) {
+    if (loading) {
         return <div>Loading products...</div>;  // Display loading message while fetching
-      }
-    
-
+    }
 
     return (
-        <CartContext.Provider value={{ cartItems, setCartItems }}>
+        <>
         <Navbar/>
-
         <div className="product-page">
-            
-            <button className="cart-btn try-btn" onClick={()=>openCart()}>
+            <button className="cart-btn try-btn" onClick={openCart}>
                 <ShoppingCart size={50} style={{ width: 'auto', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }} />
                 Cart
             </button>
@@ -111,7 +94,6 @@ export default function ProductGallery({ products: staticProducts }) {
                 <h1>Our Latest Collection</h1>
                 <p>Browse our stylish outfits for your virtual try-on experience</p>
             </div>
-
             <div className="search-bar" style={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <input
                     type="text"
@@ -128,7 +110,6 @@ export default function ProductGallery({ products: staticProducts }) {
                     }}
                 />
             </div>
-
             <div className="product-grid">
                 {products.filter(
                     product => product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -146,9 +127,7 @@ export default function ProductGallery({ products: staticProducts }) {
                         </div>
                     ))}
             </div>
-
             <div className="wave-decoration"></div>
-
             <style jsx>{`
                 .try-btn {
                     background-color: white;
@@ -281,7 +260,7 @@ export default function ProductGallery({ products: staticProducts }) {
                 }
             `}</style>
         </div>
-        </CartContext.Provider>
+        </>
     );
 }
 

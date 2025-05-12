@@ -1,38 +1,51 @@
 // /pages/api/submit-order.js
-import {connectToDB} from "../../lib/mongodb";  // Ensure MongoDB is connected
+import { connectToDB } from "../../lib/mongodb";
+
+function generateOrderId() {
+  // Generates a random 8-character alphanumeric order ID
+  return Math.random().toString(36).substr(2, 8).toLowerCase();
+}
+
+function generateTrackingId() {
+  // Generates a random 10-character alphanumeric tracking ID
+  return Math.random().toString(36).substr(2, 10).toLowerCase();
+}
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
+    const { name, address, phone, email, items, totalAmount } = req.body;
+
+    if (!name || !address || !phone || !email) {
+      return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+
     try {
-      const { name, address, phone, userId } = req.body;
-
-      // Check if the required fields are provided
-      if (!name || !address || !phone) {
-        return res.status(400).json({ success: false, message: "Missing required fields" });
-      }
-
       const db = await connectToDB();
-      const collection = await db.collection('orders')
-      console.log(collection)
-      // Create a new order object
-      const newOrder = {
+      const orderId = generateOrderId();
+      const trackingId = generateTrackingId();
+
+      // Save order to the database
+      const order = {
+        orderId,
+        trackingId,
         name,
         address,
         phone,
-        userId: userId || null,  // Use null for guest users
-        createdAt: new Date(),
+        email, // Store user email as unique identifier
+        items: items || [],
+        totalAmount: totalAmount || 0,
+        status: 'pending',
+        date: new Date(),
       };
 
-      // Insert the new order into the database
-      const result = await collection.insertOne(newOrder);
+      const result = await db.collection("orders").insertOne(order);
 
-      // Respond with success
-      return res.status(200).json({ success: true, message: "Order placed successfully", orderId: result.insertedId });
+      return res.status(200).json({ success: true, orderId, trackingId });
     } catch (error) {
-      console.error("Error placing order:", error);
-      return res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
+      console.error("Error submitting order:", error);
+      return res.status(500).json({ success: false, message: 'Error submitting order' });
     }
   } else {
-    return res.status(405).json({ message: "Only POST requests allowed" });
+    res.status(405).json({ success: false, message: 'Method Not Allowed' });
   }
 }
