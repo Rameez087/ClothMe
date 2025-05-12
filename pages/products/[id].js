@@ -26,23 +26,22 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     try {
-        console.log("Fetching product with ID:", params.id);
         const res = await fetch(`http://localhost:3000/api/getProduct/${params.id}`);
         const data = await res.json();
-        console.log("Response from API:", data);
 
         if (!data.success || !data.product) {
-            return { props: { product: null } };
+            return { notFound: true }; 
         }
 
         return {
-            props: { product: data.product || null }, 
+            props: { product: data.product },
         };
     } catch (error) {
         console.error('Error fetching product:', error);
-        return { props: { product: null } };  
+        return { notFound: true }; 
     }
 }
+
 
 
 
