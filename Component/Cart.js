@@ -22,24 +22,185 @@ export default function Cart(props) {
         router.push('/checkout')
     }
     return(
-        <div className="cart-page">
+        <div className="modern-cart">
+            <div className="cart-header">
+                <h2>Your Cart</h2>
+                <button className="close-cart-btn" onClick={() => window.history.back()}>×</button>
+            </div>
             
-            <h1 className="total-btn try-btn">Your Cart</h1>
-            
-            <div className="product-grid">
+            <div className="cart-items-container">
                 {props.c.map((item) => (
-                    <div className="product-card" key={item._id}>
-                        <img src={item.image} alt={item.name} className="product-img" />
+                    <div className="modern-cart-item" key={item._id}>
+                        <img src={item.image} alt={item.name} className="cart-item-image" />
                         <div className="cart-item-details">
-                            <h3>{item.name}</h3>
-                            <p>Price: ${item.price}</p>
-                            <button className="model-btn try-btn" onClick={()=>removeItem(item._id)}>Remove</button>
+                            <h3 className="item-name">{item.name}</h3>
+                            <p className="item-price">${item.price}</p>
+                            <button className="btn btn-outline btn-sm remove-btn" onClick={()=>removeItem(item._id)}>
+                                Remove
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
-            <div className="total-btn try-btn">
-                <h2>Total: ${props.c.reduce((total, item) => total + item.price, 0)}</h2>
+            
+            {props.c.length === 0 ? (
+                <div className="empty-cart">
+                    <p>Your cart is empty</p>
+                </div>
+            ) : (
+                <>
+                    <div className="cart-total">
+                        <h3>Total: ${props.c.reduce((total, item) => total + item.price, 0).toFixed(2)}</h3>
+                    </div>
+                    <div className="cart-actions">
+                        <Link href="/checkout" legacyBehavior>
+                            <a className="btn btn-primary btn-lg checkout-btn">
+                                Proceed to Checkout
+                            </a>
+                        </Link>
+                    </div>
+                </>
+            )}
+
+            <style jsx>{`
+                .modern-cart {
+                    background: white;
+                    border-radius: var(--radius-lg);
+                    padding: 0;
+                    max-width: 600px;
+                    width: 100%;
+                    max-height: 80vh;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .cart-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 1.5rem;
+                    border-bottom: 1px solid var(--border-color);
+                    background: var(--secondary-color);
+                }
+
+                .cart-header h2 {
+                    margin: 0;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    color: var(--text-color);
+                }
+
+                .close-cart-btn {
+                    background: none;
+                    border: none;
+                    font-size: 2rem;
+                    cursor: pointer;
+                    color: #64748b;
+                    padding: 0;
+                    width: 2rem;
+                    height: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    transition: all 0.2s ease;
+                }
+
+                .close-cart-btn:hover {
+                    background: #f1f5f9;
+                    color: var(--text-color);
+                }
+
+                .cart-items-container {
+                    flex: 1;
+                    overflow-y: auto;
+                    padding: 1rem;
+                }
+
+                .modern-cart-item {
+                    display: flex;
+                    gap: 1rem;
+                    padding: 1rem;
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-md);
+                    margin-bottom: 1rem;
+                    transition: all 0.2s ease;
+                }
+
+                .modern-cart-item:hover {
+                    box-shadow: var(--shadow-sm);
+                }
+
+                .cart-item-image {
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: var(--radius-sm);
+                    flex-shrink: 0;
+                }
+
+                .cart-item-details {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                }
+
+                .item-name {
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: var(--text-color);
+                    margin: 0;
+                }
+
+                .item-price {
+                    font-size: 1.1rem;
+                    font-weight: 700;
+                    color: var(--accent-color);
+                    margin: 0;
+                }
+
+                .remove-btn {
+                    align-self: flex-start;
+                    margin-top: auto;
+                }
+
+                .empty-cart {
+                    text-align: center;
+                    padding: 3rem 1rem;
+                    color: #64748b;
+                }
+
+                .cart-total {
+                    padding: 1rem 1.5rem;
+                    border-top: 1px solid var(--border-color);
+                    background: var(--secondary-color);
+                }
+
+                .cart-total h3 {
+                    margin: 0;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    color: var(--text-color);
+                    text-align: right;
+                }
+
+                .cart-actions {
+                    padding: 1rem 1.5rem;
+                    border-top: 1px solid var(--border-color);
+                }
+
+                .checkout-btn {
+                    width: 100%;
+                    text-align: center;
+                    text-decoration: none;
+                }
+            `}</style>
+        </div>
+    )
+}
+
             </div>
                 <Link href="/checkout" legacyBehavior>
                 <a>

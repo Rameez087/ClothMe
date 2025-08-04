@@ -7,24 +7,24 @@ import Navbar from "@/Component/navbar";
 export default function HomePage() {
   const router = useRouter();
 
-
   return (
-    <div>
+    <div className="app-container">
       <Navbar/>
 
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Virtual Try-On Experience</h1>
+          <h1>Virtual Try-On Revolution</h1>
           <p>
-            Transform your online shopping experience with our AI-powered virtual fitting room.
-            Try clothes on your digital twin, visualize perfect fits, and shop with confidence.
-            Train the system with your own wardrobe for personalized recommendations.
+            Experience the future of fashion with our AI-powered virtual fitting room. 
+            Try on clothes instantly, get perfect fits, and shop with complete confidence.
           </p>
           <div className="cta-buttons">
-            <Link href="/try_on" className="cta-btn primary-btn">
+            <Link href="/try_on" className="btn btn-primary btn-lg">
               Try Now
             </Link>
-            
+            <Link href="/about" className="btn btn-outline btn-lg">
+              Learn More
+            </Link>
           </div>
         </div>
         <div className="hero-image">
@@ -34,6 +34,7 @@ export default function HomePage() {
             alt="Elegant woman in white blazer and black quilted bag with sophisticated style"
             width={600}
             height={800}
+            priority
           />
         </div>
       </section>
