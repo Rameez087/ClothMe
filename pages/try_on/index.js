@@ -80,7 +80,7 @@ export default function ProductGallery({ products: staticProducts }) {
         
     }
     else{  console.log(session)
-}
+    }
     if (loading) {
         return (
             <div className="app-container">
@@ -116,6 +116,7 @@ export default function ProductGallery({ products: staticProducts }) {
                         <ShoppingCart size={20} />
                         <span>Cart ({cartItems.length})</span>
                         {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
+                        }
                     </button>
                 </div>
 
